@@ -15,5 +15,5 @@ LaTeX: pdfLaTeX
 UseNativePipeOperator: Yes
 
 PythonType: system
-PythonVersion: 3.11.4
+PythonVersion: 3.11.3
 PythonPath: C:/Users/dave.ETHEREAL/AppData/Local/Programs/Python/Python311/python.exe

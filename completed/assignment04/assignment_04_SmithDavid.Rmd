@@ -1,0 +1,93 @@
+---
+title: "ASSIGNMENT 4"
+author: "David Smith"
+date: '2023-07-16'
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+bibliography: bibliography.bib
+---
+
+# Markdown Basics
+
+## Favorite Foods
+
+1.  Pigs in a blanket
+2.  Macaroni Salad
+3.  Fried Shrimp
+
+## Images
+
+![ALL Cases (Log Plot)](C:/GitLab-Projects/Bellevue/SMITH-DSC520/completed/assignment04/plots/10-all-cases-log.png)
+
+## Add a Quote
+
+-   A wife of noble character is her husband's crown, but a disgraceful wife is like decay in his bones. Proverbs 12:4\*
+
+## Add an Equation
+
+$$V_{sphere} = \frac{4}{3}\pi r^3$$
+
+## Add a Footnote
+
+[^1]
+
+[^1]: Markdown is pretty helpful after the initial shock wears off.
+
+## Add Citations
+
+-   [@lander2014r]
+-   [@field2012discovering]
+
+# Inline Code
+
+```{r include=FALSE}
+library(ggplot2)
+covid_df <- read.csv("data/nytimes/covid-19-data/us-states.csv")
+covid_df$date <- as.Date(covid_df$date,format="%Y-%m-%d")
+california_df <- covid_df[ which( covid_df$state == "California"), ]
+ny_df <- covid_df[ which( covid_df$state == "New York"), ]
+florida_df <- covid_df[ which( covid_df$state == "Florida"), ]
+```
+
+## NY Times COVID-19 Data
+```{r echo=FALSE}
+ggplot(data=florida_df, aes(x=date, group=1)) +
+  geom_line(aes(y = cases, colour = "Florida")) +
+  geom_line(data=ny_df, aes(y = cases,colour="New York")) +
+  geom_line(data=california_df, aes(y = cases, colour="California")) +
+  scale_colour_manual("",
+                      breaks = c("Florida", "New York", "California"),
+                      values = c("darkred","darkgreen","steelblue")) +
+  xlab(" ") + ylab("Cases") + scale_y_log10()
+```
+
+## R4DS Height vs Earnings
+```{r echo=FALSE}
+heights_df <- read.csv("data/r4ds/heights.csv")
+ggplot(heights_df, aes(x=height, y=earn)) + geom_point()
+```
+
+# Tables
+
+## Knitr Table with Kable
+```{r echo=FALSE}
+first_column <- c("Aragon", "Bilbo", "Frodo", "Sam", "Sauron")
+second_column <- c("Men", "Hobbit", "Hobbit", "Hobbit", "Maia")
+third_column <- c("Yes","No","Yes","Yes","No")
+fourth_column <- c("No","Yes","Yes","Yes","Yes")
+fifth_column <- c(88, 129, 51, 36,7052)
+
+characters_df <- data.frame(first_column, second_column, third_column, fourth_column, fifth_column)
+
+knitr::kable(characters_df[, 1:5], "pipe")
+knitr::kable(characters_df,col.names = c('Name', 'Race', 'In Fellowship', 'Is Ring Bearer?', 'Age'))
+knitr::kable(characters_df, caption = "One Ring to Rule Them All")
+```
+## Pandoc Table
+#pander.table(characters_df, style = 'grid')
+
+
+# References
+\@ref(https://cran.r-project.org/web/packages/pander/vignettes/pandoc_table.html)
